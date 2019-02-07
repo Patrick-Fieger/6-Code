@@ -1,0 +1,434 @@
+@import 'nib'
+@import './fonts'
+
+normalize-base()
+normalize-html5()
+
+$main_color = #2a313b
+$yellow = #e0d468
+$orange = #f88654
+$color = #fefefc
+$color_primary = #697076
+
+.animation
+    opacity 0
+
+body
+	background: $main_color
+	transition background 1s
+	padding-top: 20px;
+	height 100vh
+
+*
+	-webkit-tap-highlight-color rgba(0,0,0,0)
+	outline none
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	box-sizing border-box
+	font-family "Roboto", sans-serif
+
+h1
+h2
+h3
+h4
+h5
+	color: $color
+	font-family "Roboto Thin", sans-serif;
+	font-weight lighter !important
+
+.yellow
+	color: $yellow
+.orange
+	color: $orange
+
+h1
+	margin-top: 0
+	margin-bottom 30px
+
+.columns
+	float left
+	width: 100%
+
+.hidden
+	display none !important
+
+select
+	max-width 100%
+
+.bars
+	position relative
+	width: 100%
+	display block
+	height 30vh
+.bar_wrapper
+	.line_hover
+		opacity 0
+
+.bar_wrapper.hover
+	.line_hover
+		opacity .4
+
+.line_hover
+	transition: opacity .5s
+	position absolute
+	height 2px
+	width: 100%
+	background $color_primary
+	top: 0
+	left: 0
+	z-index 10000
+.points
+	position absolute
+	height 100%
+	top: -15px
+	left: -15px
+	.item
+		position absolute
+		color: $color_primary
+	.item:nth-child(1)
+		top calc(0% - 12px)
+	.item:nth-child(2)
+		top calc(25% - 12px)
+	.item:nth-child(3)
+		top calc(50% - 12px)
+	.item:nth-child(4)
+		top calc(75% - 12px)
+	.item:nth-child(5)
+		top calc(100% - 12px)
+.bar_wrapper
+	width: 100%
+	display block
+	height 30vh
+	.bar_item
+		height 100%
+	.bar_item:after
+	.bar_item:before
+		content ""
+		position absolute
+		height 100%
+		width: 6px
+		background-color: $main_color 
+		bottom: 0
+		z-index 1000
+	.bar_item:after
+		right 0
+	.bar_item:before
+		left 0
+	.bar_item
+		float left
+		position relative
+		.date
+			font-weight: bold
+			font-size: 14px
+			position absolute
+			left 0
+			padding 5px 0
+			bottom -40px
+			border-left: 6px solid $main_color
+			border-right: 6px solid $main_color
+			background-color: #2e3641
+			color: $color_primary
+			width: 100%
+			text-align: center
+		.bar_one
+		.bar_two
+			position absolute
+			bottom : 0
+			float left
+			width: 50%
+			transition: all 1s
+		.bar_one:before
+			content ""
+			position absolute
+			height 100%
+			width: 4px
+			background-color: $main_color
+			bottom: 0
+			z-index 1000
+			right -2px
+		.bar_one
+			background: $yellow
+		.bar_two
+			background: $orange 
+			left 50%
+.legend
+	float left
+	width 100%
+	margin-top: -10px
+	margin-bottom 10px
+	height 30px
+	position: relative
+	p
+		position absolute
+		transition: opacity .5s
+		margin 3px 0 0 0px
+		color: $color_primary
+		opacity 0
+	p.active
+		opacity 1
+.selection_wrapper
+	position relative
+	float left
+	width: 50%
+	// padding: 30px 10px
+	.befindlichkeit_wrapper
+		opacity 0
+		transition opacity .5s
+		margin-top 10px
+		float left
+		clear both
+		width: 100%
+		h4
+			margin 10px 0
+		h4
+		.befindlichkeit
+			float left
+			clear both
+		.befindlichkeit
+			width: 320px
+			height 5px
+			background-color: $color_primary
+			border-radius: 2px
+			bottom: -8px
+			position relative
+			.befindlichkeit_inner
+				transition: width 1s ease-in-out
+				height 5px
+				width 30%
+				position absolute
+				z-index 100
+			.yellow_inner
+				background-color: $yellow
+			.orange_inner
+				background-color: $orange
+	.befindlichkeit_wrapper.active
+		opacity 1
+	.image
+	.text
+		float left
+	.image
+		.patient
+			width: 70px
+			height 70px
+			background-size: cover
+			background-position: center center
+			border-radius: 50%
+			border 4px solid $color_primary
+	.text
+		position relative
+		margin: 5px 0 0 20px
+	h3
+		width: 250px
+		clear: both
+		float left
+		padding-right: 30px
+		background-image: url(/img/chooser2.svg)
+		background-position: right center
+		background-size: 12px
+		background-repeat: no-repeat
+	p
+		clear: both
+		margin 0
+		float left
+	select
+		margin 0
+		position: absolute
+		top: 0
+		left 0
+		width: 100%
+		height 100%
+		opacity 0
+
+.selection_wrapper:last-child
+	width: 100%
+	h3
+		width: auto
+		min-width 300px
+
+.margin
+	margin 30px 10px
+
+.choose
+	margin-left 20px
+	width: 100%
+	max-width 1000px
+	// margin 0 auto
+	// float none
+.info
+	position relative
+	padding: 20px
+	// padding: 0 30px
+	.selection_wrapper
+		float left
+		width 50%
+	
+
+.bars
+.lines
+	transition: opacity .75s
+	// position absolute
+	opacity 0
+	position relative
+
+.lines
+	top: 20px
+	position absolute
+	z-index -1
+
+.bars.active
+.lines.active
+	z-index 1000
+	opacity 1
+
+.chooser
+	float right
+	width 150px
+	*
+		float right
+	.bars_toggle
+	.lines_toggle
+		border-radius: 2px
+		background-color lighten($main_color,2)
+		width 50px
+		height 50px
+		background-size: 30px
+		background-position: center center
+		background-repeat: no-repeat
+		cursor pointer
+		transition: background-color .5s
+		margin-left 20px
+		margin-bottom 20px
+	.bars_toggle
+		background-image: url(/img/bars.svg)
+	.lines_toggle
+		background-image: url(/img/line.svg)
+	div.active
+	div:hover
+		background-color lighten($main_color,10)
+
+.zeit_wrappper
+	float left
+	.selection_wrapper
+		width: 250px
+		position relative
+	.selection_wrapper:last-child
+		margin-left: 150px
+	.selection_wrapper:last-child:before
+		content: ""
+		position: absolute
+		left -80px
+		top: 25px
+		height 2px
+		width: 30px
+		background: $color_primary
+
+.chooser
+	opacity 0
+	transition: all .5s
+
+.chooser.active
+	opacity 1
+
+.chooser
+.zeit_wrappper
+	transition: all .5s
+
+.charts
+	height 0
+	overflow hidden
+	transition: all .5s
+
+.charts.active
+	height calc(30vh + 90px)
+	overflow initial
+
+.yellow_border
+	border-color: $yellow !important
+.orange_border
+	border-color: $orange !important
+
+.start_anim
+	transition: opacity 1s
+	opacity 0
+
+.start_anim.start_active
+	opacity 1
+
+
+#erklaerung
+	transition: all .5s
+	position fixed
+	top 0
+	left 0
+	width 100%
+	height 100%
+	background: $main_color
+	opacity 0
+	visibility: hidden
+	.container
+		width: 100%
+		max-width 700px
+		margin 30px auto
+		*
+			color: $color
+			// text-align: center
+		button
+			appearance none
+			background transparent
+			font-size: 1.1rem
+			padding: 5px 10px
+			display block
+			margin-top: 30px
+			// margin 0 auto
+			transition: all .3s
+			cursor pointer
+			box-shadow: none
+			outline 0
+		button:hover
+			color $main_color
+			background: #fff
+
+#erklaerung.active
+	opacity 1
+	visibility: visible
+
+.notification
+	position fixed
+	top : -75px
+	left 0
+	width: 100%
+	padding: 10px 20px
+	background-color: #e63e3e
+	transition: all .5s
+	p
+		text-align: center
+		color $color
+
+.notification.active
+	top 0
+
+.button_wrapper_chooser
+	position relative
+	z-index 10000
+	float left
+	width: 100%
+	button
+		background-color: transparent
+		border 1px solid $color_primary
+		color: $color_primary
+		font-size: 1rem
+		border-radius: 2px
+		padding: 5px 10px
+		margin-right 15px
+		margin-bottom 20px
+		cursor pointer
+		transition: all .3s
+	button:hover
+		color: $color
+		border-color: $color
+	button:active
+		color: $color_primary
+		border-color: $color_primary
+
+@import './animate'
+@import './mobile'

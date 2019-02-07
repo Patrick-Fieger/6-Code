@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="bachelor-patrick-fieger" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="bachelor-patrick-fieger" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="bachelor-patrick-fieger" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="bachelor-patrick-fieger" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Patrick Fieger Bachelor Thesis</title>
+    <meta name="description" content="">
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+    <div ng-controller="IndexCtrl">
+        <div ng-class="{active:showAlertNotification}" class="notification">
+            <p>{{notification}}</p>
+        </div>
+
+        <div class="columns choose">
+            <h1 class="start_anim">Benchmarking zwischen Patienten</h1>
+            <div class="selection_wrapper start_anim">
+                <div class="image">
+                    <div class="patient" ng-class="{yellow_border: patient1 !== ''}" style="background-image:url(/img/patienten/{{bild1}})"></div>
+                </div>
+                <div class="text">
+                    <h3>
+                        <span ng-show="patient1 == ''">Hauptpatient wählen</span>
+                        <span class="yellow" ng-hide="patient1 == ''">{{patients[patient1 - 1]}}</span>
+                    </h3>
+                    <select ng-model="patient1" name="patient1" id="patient1" ng-change="checkWeHaveToLoadData()">
+                        <option ng-repeat="patient in patients" value="{{$index + 1}}">{{patient}}</option>
+                    </select>
+                </div>
+                
+                <div ng-class="{active:isInit}" class="befindlichkeit_wrapper">
+                    <h4>Befindlichkeit im Zeitraum  - {{patient1_befindlichkeit}}%</h4>
+                    <div class="befindlichkeit">
+                        <div class="befindlichkeit_inner yellow_inner" style="width:{{patient1_befindlichkeit}}%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="selection_wrapper start_anim">
+                <div class="image">
+                    <div class="patient" ng-class="{orange_border: patient2 !== ''}" style="background-image:url(/img/patienten/{{bild2}})"></div>
+                </div>
+                <div class="text">
+                    <h3>
+                        <span ng-show="patient2 == ''">Vergleichspatient wählen</span>
+                        <span class="orange" ng-hide="patient2 == ''">{{patients[patient2 - 1]}}</span>
+                    </h3>
+                   
+                    <select ng-model="patient2" name="patient2" id="patient2" ng-change="checkWeHaveToLoadData()">
+                        <option ng-repeat="patient in patients" value="{{$index + 1}}">{{patient}}</option>
+                    </select>
+                </div>
+                <div ng-class="{active:isInit}" class="befindlichkeit_wrapper">
+                    <h4>Befindlichkeit im Zeitraum - {{patient2_befindlichkeit}}%</h4>
+                    <div class="befindlichkeit">
+                        <div class="befindlichkeit_inner orange_inner" style="width:{{patient2_befindlichkeit}}%"></div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div style="margin:50px 0 20px" class="selection_wrapper start_anim">
+                <h3>
+                    <span ng-show="question_choosed == undefined">BSL-23 oder E-11 Frage auswählen</span>
+                    <span ng-show="question_choosed !== undefined">{{question_choosed}}. {{questions[question_choosed]}}</span>
+                </h3>
+                
+                <select name="question_chooser" id="question_chooser" ng-change="chooseDataSetFromPatients()" ng-model="question_choosed">
+                    <option value="{{$index}}" ng-repeat="question in questions">{{$index}}. {{question}}</option>
+                </select>
+
+                <div class="button_wrapper_chooser">
+                    <button ng-click="questionIncrease(false)" ng-show="question_choosed >= 1">Vorherige Frage</button>
+                    <button ng-click="questionIncrease(true)" ng-show="question_choosed < 35">Nächste Frage</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="columns info start_anim">
+            <div class="charts" ng-class="{'active':isInit}">
+                <div class="bars" ng-class="{'active':showBars}">
+                    <div class="points">
+                        <p class="item">4</p>
+                        <p class="item">3</p>
+                        <p class="item">2</p>
+                        <p class="item">1</p>
+                        <p class="item">0</p>
+                    </div>
+                    <div class="bar_wrapper">
+                        <div class="line_hover"></div>
+                        <div class="bar_item" ng-repeat="item in first_patient_calculated"  style="width: {{100 / first_patient_calculated.length}}%">
+                            <span class="date">{{item.week}}</span>
+                            <div ng-if="calculateAll" class="all">
+                                    <div class="bar_one" style="height: {{100 / 92 * first_patient_calculated[$index].all}}%;"></div>
+                                    <div class="bar_two" style="height: {{100 / 92 * second_patient_calculated[$index].all}}%;"></div>
+                            </div>
+                            <div ng-if="!calculateAll" class="one">
+                                    <div class="bar_one" style="height: {{100 / 4 * first_patient_calculated[$index].question_choosed}}%;"></div>
+                                    <div class="bar_two" style="height: {{100 / 4 * second_patient_calculated[$index].question_choosed}}%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lines" ng-class="{active:showLines}">
+                    <div class="line_chart">
+                        <canvas id="line_chart__" width="100px" height="100px"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="legend">
+                <p>{{question_choosed}}</p>
+                <p ng-class="{active : question_choosed <= 23 && question_choosed !== '' && isInit}">
+                    <strong>0</strong> = überhaupt nicht <span> | </span> 
+                    <strong>1</strong> = ein wenig <span> | </span> 
+                    <strong>2</strong> = ziemlich <span> | </span> 
+                    <strong>3</strong> = stark <span> | </span> 
+                    <strong>4</strong> = sehr stark
+                </p>
+                <p ng-class="{active : question_choosed >= 25 && question_choosed !== '' && isInit}">
+                    <strong>0</strong> = gar nicht <span> | </span> 
+                    <strong>1</strong> = 1 mal <span> | </span> 
+                    <strong>2</strong> = 2 mal <span> | </span> 
+                    <strong>3</strong> = täglich <span> | </span> 
+                    <strong>4</strong> = mehr als täglich
+                </p>
+            </div> 
+            <div class="chooser" ng-class="{active:isInit}">
+                <div class="lines_toggle" ng-class="{active:showLines}" ng-click="showBars=false;showLines=true"></div>
+                <div class="bars_toggle" ng-class="{active:showBars}" ng-click="showBars=true;showLines=false"></div>
+            </div>
+            <div class="zeit_wrappper" ng-class="{active:isInit}">
+                <div class="selection_wrapper">
+                    <h3>
+                        <span ng-show="datum1 == ''">Zeitraum Start</span>
+                        <span ng-hide="datum1 == ''">{{calender[datum1 - 1]}}</span>
+                    </h3>
+                    <select name="datum1" id="datum1" ng-model="datum1" ng-change="checkWeHaveToLoadData()">
+                        <option ng-repeat="week in calender" value="{{$index + 1}}">{{week}}</option>
+                    </select>
+                </div>
+                <div class="selection_wrapper">
+                    <h3>
+                        <span ng-show="datum2 == ''">Zeitraum Ende</span>
+                        <span ng-hide="datum2 == ''">{{calender[datum2 - 1]}}</span>
+                    </h3>
+                    <select name="datum2" id="datum2" ng-model="datum2" ng-change="checkWeHaveToLoadData()">
+                        <option ng-repeat="week in calender" value="{{$index + 1}}">{{week}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="erklaerung">
+        <div class="container">
+            <h1>Erklärung</h1>
+            <p>Hier folgt eine kleine Anleitung zur Bedienung!</p>
+            <button class="start">Fenster schließen</button>
+        </div>
+        
+    </div>
+
+    <script src="js/jquery-min.js"></script>
+    <script src="js/plugins-min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="app-min.js"></script>
+</body>
+</html>

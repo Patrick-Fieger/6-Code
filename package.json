@@ -1,0 +1,14 @@
+{
+  "name": "Bachelor-Thesis-Project",
+  "version": "1.0.0",
+  "description": "Bachelor-Thesis-Project",
+  "main": "server.js",
+  "author": "Patrick Fieger patrickfieger90@gmail.com",
+  "devDependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "fs-extra": "^0.26.3",
+    "moment": "^2.18.1",
+    "morgan": "^1.6.1"
+  }
+}
