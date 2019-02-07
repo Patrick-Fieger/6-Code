@@ -6,7 +6,7 @@
 
 Um das System in Betrieb zu nehmen sind folgende Schritte notwendig
 
-+ Repository unter [http://localhost:5000](http://localhost:5000) herunterladen oder von beigelegter CD-Kopieren
++ Repository unter [https://github.com/Patrick-Fieger/6-Code](https://github.com/Patrick-Fieger/6-Code) herunterladen oder von beigelegter CD-Kopieren
 
 + Node herunterladen und installieren. (https://nodejs.org/en/)
 
